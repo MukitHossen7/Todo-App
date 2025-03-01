@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
+import { FaCheckCircle } from "react-icons/fa";
+import { MdDeleteForever } from "react-icons/md";
 const Todo = () => {
   const [tasks, setTasks] = useState([]);
   const [inputValue, setInputValue] = useState("");
@@ -26,7 +28,6 @@ const Todo = () => {
       toast.success("Task added successfully!");
     }
   };
-  console.log(tasks);
   return (
     <div className="py-20 max-w-96 mx-auto">
       <h2 className="text-center text-2xl font-semibold">Todo App</h2>
@@ -37,15 +38,40 @@ const Todo = () => {
             placeholder="Add a new task"
             value={inputValue}
             onChange={(event) => handleInputValue(event.target.value)}
-            className="border border-[#1E293B] rounded-l-md  py-1 px-2"
+            className="border-2 border-[#1E293B] rounded-l-md  py-1 px-2 bg-gray-50 focus:rounded-l-md"
           />
           <button
-            className="bg-[#1E293B] text-gray-100 py-[5px] px-3 rounded-r-md font-medium"
+            className="bg-[#1E293B] text-gray-100 py-[6px] px-3 rounded-r-md font-medium"
             type="submit"
           >
             Add Task
           </button>
         </form>
+      </div>
+      <div>
+        {tasks?.length === 0 && (
+          <p className="text-center text-xl text-gray-800 font-medium mt-4">
+            No tasks added yet.
+          </p>
+        )}
+        <div className="flex flex-col gap-3 mt-4">
+          {tasks?.map((task, index) => (
+            <div
+              className="bg-gray-100 p-4 rounded-lg shadow flex justify-between items-center"
+              key={index}
+            >
+              <p className="font-medium">{task}</p>
+              <div className="flex items-center gap-2">
+                <button>
+                  <FaCheckCircle className="text-green-400 text-lg" />
+                </button>
+                <button>
+                  <MdDeleteForever className="text-red-400 text-xl" />
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
       <Toaster />
     </div>
