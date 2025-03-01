@@ -58,6 +58,7 @@ const Todo = () => {
             type="text"
             placeholder="Add a new task"
             value={inputValue}
+            autoComplete="off"
             onChange={(event) => handleInputValue(event.target.value)}
             className="border-2 border-[#1E293B] rounded-l-md  py-1 px-2 bg-gray-50 focus:rounded-l-md"
           />
