@@ -41,7 +41,11 @@ const Todo = () => {
     }, 1000);
     return () => clearInterval(intervalId);
   }, []);
-
+  const handleDelete = (deleteData) => {
+    const deleteValue = tasks.filter((data) => data !== deleteData);
+    setTasks(deleteValue);
+  };
+  // console.log(tasks.length);
   return (
     <div className="py-20 max-w-96 mx-auto">
       <h2 className="text-center text-2xl font-semibold">Welcome Todo App</h2>
@@ -82,7 +86,10 @@ const Todo = () => {
                 <button>
                   <FaCheckCircle className="text-green-400 text-lg" />
                 </button>
-                <button>
+                <button
+                  className="cursor-pointer"
+                  onClick={() => handleDelete(`${task}`)}
+                >
                   <MdDeleteForever className="text-red-400 text-xl" />
                 </button>
               </div>
