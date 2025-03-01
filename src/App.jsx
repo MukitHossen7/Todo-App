@@ -1,7 +1,9 @@
+import Todo from "./Projects/Todo/Todo";
+
 function App() {
   return (
     <>
-      <h2 className="text-center text-2xl">Todo App</h2>
+      <Todo></Todo>
     </>
   );
 }
