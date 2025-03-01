@@ -16,6 +16,7 @@ const Todo = () => {
       const taskValue = tasks.find((task) => task == inputValue);
       if (taskValue) {
         toast.error("Task already exists!");
+        setInputValue("");
         return;
       }
     }
