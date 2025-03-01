@@ -4,29 +4,46 @@ import { FaCheckCircle } from "react-icons/fa";
 import { MdDeleteForever } from "react-icons/md";
 const Todo = () => {
   const [tasks, setTasks] = useState([]);
-  const [inputValue, setInputValue] = useState("");
+  const [inputValue, setInputValue] = useState({});
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
+
   const handleInputValue = (value) => {
-    setInputValue(value);
+    const taskValue = {
+      id: value,
+      todoTask: value,
+      completed: false,
+    };
+    setInputValue(taskValue);
   };
+  // console.log(tasks);
   const handleFormSubmit = (event) => {
     event.preventDefault();
-    if (!inputValue) {
+    if (!inputValue?.todoTask) {
       toast.error("Task cannot be empty!");
       return;
     }
-    if (inputValue) {
-      const taskValue = tasks.find((task) => task == inputValue);
+    if (inputValue?.todoTask) {
+      const taskValue = tasks.find(
+        (task) => task?.todoTask === inputValue?.todoTask
+      );
       if (taskValue) {
         toast.error("Task already exists!");
-        setInputValue("");
+        setInputValue({
+          id: "",
+          todoTask: "",
+          completed: false,
+        });
         return;
       }
     }
     if (inputValue) {
       setTasks([...tasks, inputValue]);
-      setInputValue("");
+      setInputValue({
+        id: "",
+        todoTask: "",
+        completed: false,
+      });
       toast.success("Task added successfully!");
     }
   };
@@ -50,7 +67,8 @@ const Todo = () => {
     setTasks([]);
     toast.success("All tasks cleared successfully!");
   };
-  console.log(tasks.length);
+
+  console.log(tasks);
 
   return (
     <div className="py-20 max-w-96 mx-auto">
@@ -63,7 +81,7 @@ const Todo = () => {
           <input
             type="text"
             placeholder="Add a new task"
-            value={inputValue}
+            value={inputValue?.todoTask}
             autoComplete="off"
             onChange={(event) => handleInputValue(event.target.value)}
             className="border-2 border-[#1E293B] rounded-l-md  py-1 px-2 bg-gray-50 focus:rounded-l-md"
@@ -88,9 +106,9 @@ const Todo = () => {
               className="bg-gray-100 p-4 rounded-lg shadow flex justify-between items-center"
               key={index}
             >
-              <p className="font-medium">{task}</p>
+              <p className={`font-medium`}>{task?.todoTask}</p>
               <div className="flex items-center gap-2">
-                <button>
+                <button className="cursor-pointer">
                   <FaCheckCircle className="text-green-400 text-lg" />
                 </button>
                 <button
