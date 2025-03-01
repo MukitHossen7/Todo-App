@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { FaCheckCircle } from "react-icons/fa";
 import { MdDeleteForever } from "react-icons/md";
 const Todo = () => {
   const [tasks, setTasks] = useState([]);
   const [inputValue, setInputValue] = useState("");
+  const [date, setDate] = useState("");
+  const [time, setTime] = useState("");
   const handleInputValue = (value) => {
     setInputValue(value);
   };
@@ -28,9 +30,24 @@ const Todo = () => {
       toast.success("Task added successfully!");
     }
   };
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      const over = new Date();
+      const dateData = over.toLocaleDateString();
+      setDate(dateData);
+      const timeData = over.toLocaleTimeString();
+      setTime(timeData);
+    }, 1000);
+    return () => clearInterval(intervalId);
+  }, []);
+
   return (
     <div className="py-20 max-w-96 mx-auto">
-      <h2 className="text-center text-2xl font-semibold">Todo App</h2>
+      <h2 className="text-center text-2xl font-semibold">Welcome Todo App</h2>
+      <h3 className="text-center mt-3 font-medium">
+        {date} - {time}
+      </h3>
       <div>
         <form onSubmit={handleFormSubmit} className="text-center mt-4">
           <input
