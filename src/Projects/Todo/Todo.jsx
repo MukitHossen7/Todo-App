@@ -45,7 +45,13 @@ const Todo = () => {
     const deleteValue = tasks.filter((data) => data !== deleteData);
     setTasks(deleteValue);
   };
-  // console.log(tasks.length);
+
+  const handleClearAll = () => {
+    setTasks([]);
+    toast.success("All tasks cleared successfully!");
+  };
+  console.log(tasks.length);
+
   return (
     <div className="py-20 max-w-96 mx-auto">
       <h2 className="text-center text-2xl font-semibold">Welcome Todo App</h2>
@@ -97,6 +103,14 @@ const Todo = () => {
             </div>
           ))}
         </div>
+      </div>
+      <div className="text-center mt-4">
+        <button
+          onClick={handleClearAll}
+          className="bg-red-500 px-3 py-1 text-gray-100 font-medium rounded-lg"
+        >
+          Clear All
+        </button>
       </div>
       <Toaster />
     </div>
