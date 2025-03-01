@@ -8,6 +8,7 @@ const Todo = () => {
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
 
+  // handle input value functions
   const handleInputValue = (value) => {
     const taskValue = {
       id: value,
@@ -17,6 +18,8 @@ const Todo = () => {
     setInputValue(taskValue);
   };
   // console.log(tasks);
+
+  //handle Form Submission function
   const handleFormSubmit = (event) => {
     event.preventDefault();
     if (!inputValue?.todoTask) {
@@ -48,6 +51,7 @@ const Todo = () => {
     }
   };
 
+  //set Timer
   useEffect(() => {
     const intervalId = setInterval(() => {
       const over = new Date();
@@ -58,9 +62,21 @@ const Todo = () => {
     }, 1000);
     return () => clearInterval(intervalId);
   }, []);
+
+  //Handle Delete functions
   const handleDelete = (deleteData) => {
-    const deleteValue = tasks.filter((data) => data !== deleteData);
+    const deleteValue = tasks?.filter((data) => data?.todoTask !== deleteData);
     setTasks(deleteValue);
+  };
+
+  //handle Check functions
+  const handleCheck = (checkData) => {
+    const updatedTasks = tasks?.map((task) =>
+      task?.todoTask === checkData
+        ? { ...task, completed: !task.completed }
+        : task
+    );
+    setTasks(updatedTasks);
   };
 
   const handleClearAll = () => {
@@ -68,7 +84,7 @@ const Todo = () => {
     toast.success("All tasks cleared successfully!");
   };
 
-  console.log(tasks);
+  // console.log(tasks);
 
   return (
     <div className="py-20 max-w-96 mx-auto">
@@ -106,14 +122,23 @@ const Todo = () => {
               className="bg-gray-100 p-4 rounded-lg shadow flex justify-between items-center"
               key={index}
             >
-              <p className={`font-medium`}>{task?.todoTask}</p>
+              <p
+                className={`font-medium ${
+                  task.completed ? "line-through" : ""
+                }`}
+              >
+                {task?.todoTask}
+              </p>
               <div className="flex items-center gap-2">
-                <button className="cursor-pointer">
+                <button
+                  onClick={() => handleCheck(`${task.todoTask}`)}
+                  className="cursor-pointer"
+                >
                   <FaCheckCircle className="text-green-400 text-lg" />
                 </button>
                 <button
                   className="cursor-pointer"
-                  onClick={() => handleDelete(`${task}`)}
+                  onClick={() => handleDelete(`${task.todoTask}`)}
                 >
                   <MdDeleteForever className="text-red-400 text-xl" />
                 </button>
