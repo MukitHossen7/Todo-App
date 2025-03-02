@@ -7,7 +7,7 @@ import {
   localStorageSetData,
 } from "../../LocalStroage/LocalStroage";
 const Todo = () => {
-  const [tasks, setTasks] = useState(localStorageGetData());
+  const [tasks, setTasks] = useState(() => localStorageGetData());
   const [inputValue, setInputValue] = useState({});
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
@@ -87,8 +87,10 @@ const Todo = () => {
     toast.success("All tasks cleared successfully!");
   };
 
-  // console.log(tasks);
+  //todo : add data to localStorage
   localStorageSetData(tasks);
+
+  // console.log(tasks);
   return (
     <div className="py-20 max-w-96 mx-auto">
       <h2 className="text-center text-2xl font-semibold">Welcome Todo App</h2>
