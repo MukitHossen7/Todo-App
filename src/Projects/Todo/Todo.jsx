@@ -2,8 +2,17 @@ import React, { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { FaCheckCircle } from "react-icons/fa";
 import { MdDeleteForever } from "react-icons/md";
+import { localStorageSetData } from "../../LocalStroage/LocalStroage";
+// return localStorage.getItem("tasks")? JSON.parse(localStorage.getItem("tasks")) : [];
 const Todo = () => {
-  const [tasks, setTasks] = useState([]);
+  const localStorageGetData = () => {
+    const getData = localStorage.getItem("tasks");
+    if (!getData) return [];
+    const parsedData = JSON.parse(getData);
+    return parsedData;
+  };
+  // console.log();
+  const [tasks, setTasks] = useState(localStorageGetData());
   const [inputValue, setInputValue] = useState({});
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
@@ -85,7 +94,8 @@ const Todo = () => {
   };
 
   // console.log(tasks);
-
+  // localStorage.setItem("tasks", JSON.stringify(tasks))
+  localStorageSetData(tasks);
   return (
     <div className="py-20 max-w-96 mx-auto">
       <h2 className="text-center text-2xl font-semibold">Welcome Todo App</h2>
