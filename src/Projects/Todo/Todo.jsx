@@ -2,16 +2,11 @@ import React, { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { FaCheckCircle } from "react-icons/fa";
 import { MdDeleteForever } from "react-icons/md";
-import { localStorageSetData } from "../../LocalStroage/LocalStroage";
-// return localStorage.getItem("tasks")? JSON.parse(localStorage.getItem("tasks")) : [];
+import {
+  localStorageGetData,
+  localStorageSetData,
+} from "../../LocalStroage/LocalStroage";
 const Todo = () => {
-  const localStorageGetData = () => {
-    const getData = localStorage.getItem("tasks");
-    if (!getData) return [];
-    const parsedData = JSON.parse(getData);
-    return parsedData;
-  };
-  // console.log();
   const [tasks, setTasks] = useState(localStorageGetData());
   const [inputValue, setInputValue] = useState({});
   const [date, setDate] = useState("");
@@ -26,7 +21,6 @@ const Todo = () => {
     };
     setInputValue(taskValue);
   };
-  // console.log(tasks);
 
   //handle Form Submission function
   const handleFormSubmit = (event) => {
@@ -94,7 +88,6 @@ const Todo = () => {
   };
 
   // console.log(tasks);
-  // localStorage.setItem("tasks", JSON.stringify(tasks))
   localStorageSetData(tasks);
   return (
     <div className="py-20 max-w-96 mx-auto">
